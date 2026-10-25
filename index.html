@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <meta name="description" content="大陆风云：一款完全离线的原创单机大战略游戏。经营国家，部署军队，改写大陆的未来。">
+  <meta name="theme-color" content="#111b20"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>大陆风云 · 战略指挥室</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css">
+  <script defer src="data.js"></script><script defer src="engine.js"></script><script defer src="ui.js"></script>
+</head>
+<body>
+<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2Z M9 3v16m6-14v16"/></symbol>
+  <symbol id="i-focus" viewBox="0 0 24 24"><path d="M9 3h6v5H9zM3 16h6v5H3zM15 16h6v5h-6zM12 8v4H6v4m6-4h6v4"/></symbol>
+  <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 21V10l6 3V8l7 4V3h4l1 18ZM6 17h2m3 0h2m3 0h2"/></symbol>
+  <symbol id="i-army" viewBox="0 0 24 24"><path d="m4 3 15 15 2 3-3-2L3 4Zm16 0L5 18m-2 3 3-2m8-14 5 5M5 14l5 5"/></symbol>
+  <symbol id="i-diplomacy" viewBox="0 0 24 24"><path d="m3 7 4-3 5 2 5-2 4 3-3 9-6 5-6-5Z M7 10l5-4m-5 4 3 3 4-2 4 5m-9 3 3-3m0 5 3-3"/></symbol>
+  <symbol id="i-log" viewBox="0 0 24 24"><path d="M5 3h14v18H5zM8 7h8m-8 5h8m-8 5h5"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5m-13 9h16"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M4 3h13l3 3v15H4ZM8 3v6h8V3M8 21v-7h8v7"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 8a3 3 0 0 1 6 0c0 3-3 2-3 5m0 3v1"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 2 8 4v6c0 5-8 10-8 10S4 17 4 12V6ZM9 12l2 2 5-5"/></symbol>
+  <symbol id="i-steel" viewBox="0 0 24 24"><path d="m6 5 12 2 3 10-12 3-6-4Zm0 0 3 15m9-13-9 3-6 6m6-6 12 7"/></symbol>
+  <symbol id="i-oil" viewBox="0 0 24 24"><path d="M12 2S5 11 5 15a7 7 0 0 0 14 0c0-4-7-13-7-13ZM8 15a4 4 0 0 0 4 4"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 3 7 7 1-5 5 1 7-6-4-6 4 1-7-5-5 7-1Z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+</defs></svg>
+<div id="app">
+  <header class="topbar">
+    <button class="brand" data-action="menu" aria-label="游戏菜单"><span class="brand-seal">✦</span><span>大陆风云<small>CONTINENTAL CHRONICLES</small></span></button>
+    <div class="campaign-label"><span class="live-dot"></span>风暴前夕 <span class="muted">/</span> 大陆战役</div>
+    <a class="download-pack" href="大陆风云-网页数据包.zip" download aria-label="下载游戏数据包" title="下载完整游戏数据包"><svg class="icon"><use href="#i-download"/></svg><span>下载数据</span></a>
+    <div class="time-control"><div class="date-block"><strong id="date">1938.09.01</strong><small id="day-label">第 1 天</small></div><button id="pause" class="pause-button" data-action="pause" title="暂停 / 继续（空格）">▶</button><div class="speeds" aria-label="游戏速度"><button data-action="speed" data-value="1">1×</button><button data-action="speed" data-value="2">2×</button><button data-action="speed" data-value="3">3×</button></div><button class="icon-button" data-action="menu" title="存档与设置"><svg class="icon"><use href="#i-save"/></svg></button></div>
+  </header>
+  <section id="resources" class="resource-strip" aria-label="国家资源"></section>
+  <main class="command-room">
+    <aside class="sidebar">
+      <div id="nation-header"></div><div class="section-label">国家指挥 / COMMAND</div>
+      <nav aria-label="国家管理">
+        <button class="nav-item active" data-action="map"><svg class="icon"><use href="#i-map"/></svg>战略地图<span>01</span></button>
+        <button class="nav-item" data-action="focus"><svg class="icon"><use href="#i-focus"/></svg>国家方略<span id="focus-dot" class="attention-dot"></span></button>
+        <button class="nav-item" data-action="production"><svg class="icon"><use href="#i-factory"/></svg>工业与建设<span>03</span></button>
+        <button class="nav-item" data-action="army"><svg class="icon"><use href="#i-army"/></svg>陆军司令部<span>04</span></button>
+        <button class="nav-item" data-action="diplomacy"><svg class="icon"><use href="#i-diplomacy"/></svg>外交事务<span>05</span></button>
+      </nav>
+      <div id="focus-summary"></div><div id="objective"></div>
+      <div class="sidebar-bottom"><button data-action="help"><svg class="icon"><use href="#i-help"/></svg>指挥官手册 <span>?</span></button><div class="offline-status"><span class="live-dot"></span>离线单机 <span>v1.0</span></div></div>
+    </aside>
+    <section class="map-panel" aria-label="大陆地图">
+      <div class="map-heading"><div><span class="eyebrow">THE AETHERA CONTINENT</span><h1>埃瑟拉大陆</h1></div><div id="world-status" class="map-status">和平时期</div></div>
+      <div class="map-layer-controls" role="group" aria-label="地图模式"><button data-action="layer" data-value="political" class="active">政治</button><button data-action="layer" data-value="terrain">地形</button><button data-action="layer" data-value="supply">补给</button></div>
+      <div class="map-stage"><svg id="world-map" viewBox="40 25 1115 725" role="group" aria-label="点击地区查看详情，选中部队后点击目标下令"></svg></div>
+      <div id="order-banner" class="order-banner" hidden></div>
+      <div class="map-key"><span><i class="key-capital">★</i>首都</span><span><i class="key-hub">◇</i>补给中心</span><span><i class="key-battle">⚔</i>交战</span><button data-action="zoom" data-value="-1" title="缩小地图">−</button><span id="zoom-level">100%</span><button data-action="zoom" data-value="1" title="放大地图">+</button><button data-action="reset-map" title="重置地图">⌖</button></div>
+      <div class="map-hint" id="map-hint">点击地区查看情报 · 点击己方部队下达命令</div>
+    </section>
+    <aside id="inspector" class="inspector" aria-label="所选地区与部队详情"></aside>
+  </main>
+  <footer class="intel-strip"><div class="intel-heading"><span class="eyebrow">SITUATION REPORT</span><strong>战局简报</strong><button data-action="events">全部事件 ↗</button></div><div id="latest-events"></div><div class="next-tick" id="next-tick"></div></footer>
+</div>
+<dialog id="modal" aria-labelledby="modal-title"><div id="modal-content"></div></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+<input id="import-file" type="file" accept=".json,application/json" hidden>
+<noscript>请在浏览器中开启 JavaScript 以游玩《大陆风云》。游戏不需要联网。</noscript>
+</body></html>
