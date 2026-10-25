@@ -2,7 +2,7 @@
   'use strict';
   const countries = [
     {id:0,name:'阿尔登联邦',short:'阿尔登',en:'ARDEN FEDERATION',color:'#639d9a',dark:'#315d60',symbol:'✦',capital:'苍石城',trait:'工业之心',bonus:'建设效率 +25%，初始军工最多',description:'北境的工厂昼夜不息。以工业积累支撑战线，是最稳健的大陆开局。',playable:true,civ:6,mil:7,units:8,stability:78,style:'均衡发展',attack:1,construction:1.25,oil:1},
-    {id:1,name:'维斯塔共和国',short:'维斯塔',en:'VESTA REPUBLIC',color:'#c3a16b',dark:'#756040',symbol:'◇',capital:'金穗城',trait:'丰饶腹地',bonus:'燃油产出 +50%，初始库存充足',description:'宽阔平原与丰富油田孕育了繁荣。尽快把资源优势转化成能守住边境的军队。',playable:true,civ:5,mil:5,units:6,stability:82,style:'资源经营',attack:1,construction:1,oil:1.5},
+    {id:1,name:'维斯塔共和国',short:'维斯塔',en:'VESTA REPUBLIC',color:'#c3a16b',dark:'#756040',symbol:'◇',capital:'江界市',trait:'丰饶腹地',bonus:'燃油产出 +50%，初始库存充足',description:'宽阔平原与丰富油田孕育了繁荣。尽快把资源优势转化成能守住边境的军队。',playable:true,civ:5,mil:5,units:6,stability:82,style:'资源经营',attack:1,construction:1,oil:1.5},
     {id:2,name:'凛峰王国',short:'凛峰',en:'RIME KINGDOM',color:'#8d99b6',dark:'#4e5977',symbol:'♜',capital:'霜冠城',trait:'山地卫士',bonus:'山地防御 +25%，步兵训练加快',description:'群山是天然的城墙。稳住防线、争取盟友，再选择最脆弱的方向突围。',playable:true,civ:4,mil:4,units:7,stability:88,style:'防守反击',attack:1,construction:1,oil:1},
     {id:3,name:'赤原公社',short:'赤原',en:'REDLAND COMMUNE',color:'#ba7970',dark:'#774a45',symbol:'▲',capital:'红炉城',trait:'全民动员',bonus:'步兵训练时间 −20%',description:'南部的工业城镇组成了坚韧的共同体。',civ:5,mil:5,units:7,stability:75,style:'广泛动员',attack:1,construction:1,oil:1},
     {id:4,name:'索兰帝国',short:'索兰',en:'SOLAR EMPIRE',color:'#aa9564',dark:'#6d603c',symbol:'☀',capital:'日冕城',trait:'机动作战',bonus:'装甲与摩托化攻击 +15%',description:'大陆中部的新兴强权，渴望打通通往北方的道路。',civ:5,mil:6,units:8,stability:73,style:'装甲突破',attack:1.15,construction:1,oil:1},
