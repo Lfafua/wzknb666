@@ -106,9 +106,9 @@
   }
   function selectUnit(id,issue=true){const u=game.units.find(u=>u.id===id);if(!u)return;selectedRegion=u.pos;selectedUnit=u.owner===game.player?u.id:null;group=[];armed=u.owner===game.player&&issue&&!game.result;render();}
   function selectRegion(id){if(game.result){selectedRegion=id;armed=false;render();return;}if(armed&&selectedUnit){const ids=group.length?group:[selectedUnit],results=ids.map(uid=>game.order(uid,id));toast(results.length>1?`${results.filter(r=>r.ok).length} / ${results.length} 个师已接受命令`:results[0].reason);armed=false;saveAuto();}selectedRegion=id;render();}
-  function start(){game=new Campaign(chosenCountry,difficulty,(Date.now()&0xffffffff)>>>0);started=true;resultShown=false;selectedRegion=game.player;selectedUnit=null;group=[];armed=false;zoom=window.matchMedia('(max-width:650px)').matches?1.35:1;layer='political';buildProvince=game.player;$('#modal').close();modalPage=null;saveAuto();render();toast('欢迎，指挥官。时间已暂停，建议先选择「国家方略」。');}
+  function start(){game=new Campaign(chosenCountry,difficulty,(Date.now()&0xffffffff)>>>0);started=true;resultShown=false;selectedRegion=game.player;selectedUnit=null;group=[];armed=false;zoom=window.matchMedia('(orientation: landscape) and (max-height:540px) and (max-width:1100px)').matches?3.5:(window.matchMedia('(max-width:650px)').matches?1.35:1);layer='political';buildProvince=game.player;$('#modal').close();modalPage=null;saveAuto();render();toast('欢迎，指挥官。时间已暂停，建议先选择「国家方略」。');}
   function exportFile(){const blob=new Blob([game.exportSave()],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`重生之我是蒋介石_${myCountry().short}_${date(game.day)}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);toast('存档已导出到浏览器下载目录');}
-  function loadSave(text){const restored=Campaign.importSave(text);game=restored;started=true;resultShown=!!game.result;selectedRegion=game.provinces[game.player].controller===game.player?game.player:game.territories(game.player)[0]?.id??game.player;selectedUnit=null;group=[];armed=false;zoom=window.matchMedia('(max-width:650px)').matches?1.35:1;$('#modal').close();modalPage=null;render();saveAuto();toast('存档已恢复，时间处于暂停状态');}
+  function loadSave(text){const restored=Campaign.importSave(text);game=restored;started=true;resultShown=!!game.result;selectedRegion=game.provinces[game.player].controller===game.player?game.player:game.territories(game.player)[0]?.id??game.player;selectedUnit=null;group=[];armed=false;zoom=window.matchMedia('(orientation: landscape) and (max-height:540px) and (max-width:1100px)').matches?3.5:(window.matchMedia('(max-width:650px)').matches?1.35:1);$('#modal').close();modalPage=null;render();saveAuto();toast('存档已恢复，时间处于暂停状态');}
   function handleAction(action,b){const value=b?.dataset.value;if(game.result&&['choose-focus','allocate','queue-build','cancel-build','recruit','arm-order','select-group','defend','halt','diplo-action','confirm-war'].includes(action)){toast('战役已经结束，可以查看最终地图或开始新战役');return;}
     if(['focus','production','army','diplomacy','help','menu','events','result'].includes(action)){openModal(action);return;}
     if(action==='map'){if($('#modal').open)closeModal();return;}
@@ -119,7 +119,7 @@
     if(action==='choose-country'){chosenCountry=+value;renderModal();return;}
     if(action==='start'){start();return;}
     if(action==='layer'){layer=value;drawMap();return;}
-    if(action==='zoom'){zoom=Math.max(1,Math.min(2.5,zoom+(+value)*.25));drawMap();return;}
+    if(action==='zoom'){zoom=Math.max(1,Math.min(5,zoom+(+value)*.25));drawMap();return;}
     if(action==='reset-map'){zoom=1;drawMap();return;}
     if(action==='choose-focus'){if(game.focus(game.player,value)){toast('已开始推进：'+D.policies.find(p=>p.id===value).name);saveAuto();renderModal();render();}return;}
     if(action==='allocate'){game.allocate(game.player,value,+b.dataset.delta);renderModal();render();saveAuto();return;}
