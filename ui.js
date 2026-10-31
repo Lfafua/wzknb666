@@ -112,6 +112,7 @@
   function handleAction(action,b){const value=b?.dataset.value;if(game.result&&['choose-focus','allocate','queue-build','cancel-build','recruit','arm-order','select-group','defend','halt','diplo-action','confirm-war'].includes(action)){toast('战役已经结束，可以查看最终地图或开始新战役');return;}
     if(['focus','production','army','diplomacy','help','menu','events','result'].includes(action)){openModal(action);return;}
     if(action==='map'){if($('#modal').open)closeModal();return;}
+    if(action==='fullscreen'){const root=document.documentElement;if(!document.fullscreenElement){root.requestFullscreen?.().catch(()=>toast('当前浏览器不支持全屏，请使用浏览器菜单切换'));}else{document.exitFullscreen?.();}return;}
     if(action==='pause'){if(!started||game.result)return;game.paused=!game.paused;lastTick=performance.now();resources();return;}
     if(action==='speed'){game.speed=+value;lastTick=performance.now();resources();return;}
     if(action==='close'){closeModal();return;}
@@ -143,6 +144,7 @@
     if(action==='confirm-new'){openModal('start');return;}
   }
   function openWarConfirmation(target){const c=D.countries[target],reason=game.diplomacyReason(game.player,target,'war');modalPage='war-confirm';$('#modal-content').innerHTML=modalHeader('宣战电报',`目标：${c.name}`,'DECLARATION OF WAR')+`<div class="notice">${reason.reason}。双方盟国将共同参战，边境即刻开放军事行动。</div><p class="muted" style="font-size:12px">${c.name}目前拥有 ${game.units.filter(u=>u.owner===target).length} 个师，首都为${c.capital}。请确认你的部队和补给已经准备就绪。</p><div class="modal-foot"><button class="action-button" data-action="diplomacy">返回外交</button><button class="action-button danger" data-action="confirm-war" data-value="${target}">发出宣战电报</button></div>`;}
+  document.addEventListener('fullscreenchange',()=>{const b=$('.fullscreen-button');if(!b)return;const active=!!document.fullscreenElement;b.textContent=active?'⛶':'⛶';b.title=active?'退出全屏':'进入全屏';b.setAttribute('aria-label',b.title);});
   document.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(b&&!b.disabled){handleAction(b.dataset.action,b);return;}const u=e.target.closest('[data-unit]');if(u){selectUnit(+u.dataset.unit);return;}const p=e.target.closest('[data-region]');if(p)selectRegion(+p.dataset.region);});
   document.addEventListener('change',e=>{if(e.target.id==='difficulty')difficulty=e.target.value;if(e.target.id==='build-province')buildProvince=+e.target.value;if(e.target.id==='build-type')buildType=e.target.value;});
   $('#import-file').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{if(file.size>2500000)throw Error('存档超过 2.5 MB，无法导入');const text=await file.text();loadSave(text);}catch(err){toast(err.message);}finally{e.target.value='';}});
